@@ -1,9 +1,11 @@
+export const dynamic = "force-dynamic"; 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
 import { BookOpen, FileText, Zap, Upload, TrendingUp, Clock, Target, BarChart3, Award, Calendar, Activity } from "lucide-react"
 import { cookies } from "next/headers"
+
 
 async function fetchJSON<T>(url: string): Promise<T | null> {
   try {
@@ -52,7 +54,6 @@ function formatTime(minutes: number): string {
 }
 
 export default async function SimpleDashboardPage() {
-  // Try to get basic data from individual endpoints
   const [docsData, sumsData, cardsData] = await Promise.all([
     fetchJSON<{ documents: any[] }>("/api/documents"),
     fetchJSON<{ summaries: any[] }>("/api/summaries"),
