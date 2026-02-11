@@ -274,12 +274,6 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: "Document not found" }, { status: 404 });
     }
 
-    // TODO: Delete the actual file from disk
-    // const filePath = join(process.cwd(), "public", document.filePath);
-    // if (existsSync(filePath)) {
-    //   await unlink(filePath);
-    // }
-
     return NextResponse.json({ success: true });
 
   } catch (error) {
