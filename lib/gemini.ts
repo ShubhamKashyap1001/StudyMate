@@ -1,15 +1,12 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-// Initialize Gemini AI
 const apiKey = process.env.GEMINI_API_KEY;
 const genAI = apiKey ? new GoogleGenerativeAI(apiKey) : null;
 
 if (!apiKey) {
-  // Defer throwing to runtime functions so API routes can return a helpful error
   console.warn("GEMINI_API_KEY is not set. Summaries will fail until configured.");
 }
 
-// Generate flashcards from text using Gemini
 export async function generateFlashcardsFromText(
   content: string,
   documentName: string,
@@ -46,10 +43,8 @@ ${content}
     const response = await result.response;
     const text = response.text();
 
-    // Parse JSON array (handle fenced code blocks)
     const fenced = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
     const jsonCandidate = fenced ? fenced[1] : text;
-    // Extract array portion if extra text exists
     const firstBracket = jsonCandidate.indexOf("[");
     const lastBracket = jsonCandidate.lastIndexOf("]");
     const toParse = (firstBracket !== -1 && lastBracket !== -1)
@@ -57,7 +52,6 @@ ${content}
       : jsonCandidate;
 
     const parsed = JSON.parse(toParse) as any[];
-    // Basic validation and normalization
     const items: GeminiFlashcardItem[] = parsed
       .filter(Boolean)
       .map((it) => ({
@@ -77,7 +71,7 @@ ${content}
 
 export interface SummaryOptions {
   length: "brief" | "detailed" | "comprehensive";
-  focus?: string; // optional focus area
+  focus?: string; 
 }
 
 export interface GeminiSummaryResponse {
@@ -156,7 +150,6 @@ Format your response as JSON:
       // Some responses may include markdown code fences. Try to extract JSON safely.
       const fencedMatch = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
       const jsonCandidate = fencedMatch ? fencedMatch[1] : text;
-      // Find first JSON object if extra text surrounds it
       const firstBrace = jsonCandidate.indexOf("{");
       const lastBrace = jsonCandidate.lastIndexOf("}");
       const toParse = (firstBrace !== -1 && lastBrace !== -1)

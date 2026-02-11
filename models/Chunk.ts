@@ -7,7 +7,7 @@ export interface IChunk {
   chunkIndex: number;
   content: string;
   tokens?: number;
-  embedding: number[]; // Gemini text-embedding-004 (length 768)
+  embedding: number[];
   createdAt?: Date;
   updatedAt?: Date;
 }
