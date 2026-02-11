@@ -6,6 +6,7 @@ import { BookOpen, MessageSquare, Zap, FileText, User, Brain, Settings, LogOut, 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { signOut } from "next-auth/react"
+import { Folder } from "lucide-react";
 
 const sidebarItems = [
   {
@@ -38,6 +39,12 @@ const sidebarItems = [
     href: "/dashboard/account",
     icon: User,
   },
+  {
+  title: "Files",
+  href: "/dashboard/files",
+  icon: Folder,
+},
+
 ]
 
 export function DashboardSidebar() {
