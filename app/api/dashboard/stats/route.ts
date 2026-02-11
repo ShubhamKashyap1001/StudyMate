@@ -134,8 +134,9 @@ export async function GET(request: NextRequest) {
 
     // Get top performing documents (by flashcard count and summary count)
     const documentStats = documents.map(doc => {
-      const docSummaries = summaries.filter(sum => sum.documentId === doc._id.toString()).length;
-      const docFlashcards = flashcards.filter(card => card.documentId === doc._id.toString()).length;
+      const docId = (doc._id as any).toString();
+      const docSummaries = summaries.filter(sum => sum.documentId === docId).length;
+      const docFlashcards = flashcards.filter(card => card.documentId === docId).length;
       return {
         id: doc._id,
         name: doc.name,
@@ -181,7 +182,7 @@ export async function GET(request: NextRequest) {
     const documentCompletionRate = totalDocuments > 0 ? (completedDocuments / totalDocuments) * 100 : 0;
     const summaryGenerationRate = completedDocuments > 0 ? (documentSummaries / completedDocuments) * 100 : 0;
     const flashcardGenerationRate = completedDocuments > 0 ? (documents.filter(doc => 
-      flashcards.some(card => card.documentId === doc._id.toString())
+      flashcards.some(card => card.documentId === (doc._id as any).toString())
     ).length / completedDocuments) * 100 : 0;
 
     console.log("Dashboard stats: Returning successful response");
